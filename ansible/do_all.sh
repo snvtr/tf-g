@@ -6,9 +6,18 @@ chmod 0600 ~ubuntu/.ssh/id_rsa
 
 sudo apt update && sudo apt install -y ansible
 
+HAPROXY=$(cat haproxy_out.txt)
+
 # build ansible hosts here:
-#sed -r -i "s/APACHE_IP/${APACHE_IP}/g"   hosts.yaml
-#sed -r -i "s/HAPROXY_IP/${HAPROXY_IP}/g" hosts.yaml
+sed -r -i "s/HAPROXY_IP/${HAPROXY}/g" haproxy.cfg
+sed -r -i "s/HAPROXY_IP/${HAPROXY}/g" hosts.yaml
+COUNTER=0
+for i in $(cat apache_out.txt)
+do
+  echo "        $i: {}" >> hosts.yaml
+  echo "    server apache$COUNTER $i:80" >> haproxy.cfg
+  COUNTER=$(( COUNTER + 1 ))
+done
 
 # reachability test
 ansible -m ping -i hosts.yaml apache_hosts

@@ -1,20 +1,14 @@
 ---
 all:
+  vars:
+    ansible_user: ubuntu
+    ansible_become: yes
+    ansible_ssh_extra_args: -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+    #ansible_password: "xx"
   children:
-    apache_hosts:
-      hosts:
-        ${APACHE}: {}
     haproxy_hosts:
       hosts:
-        ${HAPROXY}: {}
-  hosts:
-    ${APACHE}:
-      ip: ${APACHE}
-    ${HAPROXY}:
-      ip: ${HAPROXY}
-  vars:
-      ansible_user: ubuntu
-      ansible_become: yes
-      ansible_ssh_extra_args: -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
-      #ansible_password: "xx"
-  
+        HAPROXY_IP: {}
+    apache_hosts:
+      hosts:
+        # apache_ip[x]: {}            
