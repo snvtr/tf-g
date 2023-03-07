@@ -1,6 +1,8 @@
 resource "google_compute_instance" "apache_instance" {
-  name         = "apache-instance"
+  name         = "apache-instance-${count.index}"
   machine_type = "f1-micro"
+
+  count = 2
 
   boot_disk {
     initialize_params {
@@ -9,30 +11,19 @@ resource "google_compute_instance" "apache_instance" {
   }
 
   network_interface {
-    # A default network is created for all GCP projects
     network = "default"
-    access_config {
-    }
+    access_config {}
   }
 
-  metadata = {
-    ssh-keys = "ubuntu:${file("keys/id_rsa.pub")}"
-  }
-
-  connection {
-    type  = "ssh"
-    user  = "ubuntu"
-    agent = false
-    private_key = "${file("keys/id_rsa")}"
-  }
-
-  #provisioner "file" {
-  #  source      = "files/runcalc-main-app.service"
-  #  destination = "/tmp/runcalc-main-app.service"
+  #metadata = {
+  #  ssh-keys = "ubuntu:${file("keys/id_rsa.pub")}"
   #}
 
-  #provisioner "remote-exec" {
-  #  script = "files/deploy-main-app.sh"
+  #connection {
+  #  type  = "ssh"
+  #  user  = "ubuntu"
+  #  agent = false
+  #  private_key = "${file("keys/id_rsa")}"
   #}
 
   tags = [

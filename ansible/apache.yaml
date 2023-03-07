@@ -1,0 +1,22 @@
+---
+- name: install_and_setup_apache2
+  hosts: apache_hosts
+  gather_facts: yes 
+  tasks:
+
+  - name: install apache2/Ubuntu
+    apt:
+      name: apache2
+      state: present
+
+  - name: make homepage
+    shell: /bin/echo "<html>$(hostname -I)</html>" > /var/www/html/index.html
+
+  #handlers:
+  #- name: restart_apache2 
+  #  systemd:
+  #    state: restarted
+  #    enabled: yes
+  #    daemon_reload: yes
+  #    name: apache2
+
