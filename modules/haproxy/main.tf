@@ -26,15 +26,6 @@ resource "google_compute_instance" "haproxy_instance" {
     private_key = "${file("keys/id_rsa")}"
   }
 
-  #provisioner "file" {
-  #  source      = "files/runcalc-main-app.service"
-  #  destination = "/tmp/runcalc-main-app.service"
-  #}
-
-  #provisioner "remote-exec" {
-  #  script = "files/deploy-main-app.sh"
-  #}
-
   tags = [
     "haproxy-instance"
   ]

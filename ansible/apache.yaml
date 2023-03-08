@@ -8,9 +8,10 @@
     apt:
       name: apache2
       state: present
+      update_cache: yes
 
   - name: make homepage
-    shell: /bin/echo "<html>$(hostname -I)</html>" > /var/www/html/index.html
+    shell: /bin/echo "<html>Hello, I am $(hostname -I)</html>" > /var/www/html/index.html
 
   #handlers:
   #- name: restart_apache2 

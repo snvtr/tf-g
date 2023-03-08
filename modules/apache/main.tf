@@ -15,16 +15,16 @@ resource "google_compute_instance" "apache_instance" {
     access_config {}
   }
 
-  #metadata = {
-  #  ssh-keys = "ubuntu:${file("keys/id_rsa.pub")}"
-  #}
+  metadata = {
+    ssh-keys = "ubuntu:${file("keys/id_rsa.pub")}"
+  }
 
-  #connection {
-  #  type  = "ssh"
-  #  user  = "ubuntu"
-  #  agent = false
-  #  private_key = "${file("keys/id_rsa")}"
-  #}
+  connection {
+    type  = "ssh"
+    user  = "ubuntu"
+    agent = false
+    private_key = "${file("keys/id_rsa")}"
+  }
 
   tags = [
     "apache-instance"

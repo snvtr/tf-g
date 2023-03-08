@@ -63,12 +63,12 @@ resource "google_compute_instance" "control_instance" {
     destination = "/tmp/haproxy_out.txt"
   }
 
-  #provisioner "remote-exec" {
-  #  inline = [
-  #    "chmod +x /tmp/do_all.sh",
-  #    "/tmp/do_all.sh"
-  #  ]
-  #}
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/do_all.sh",
+      "/tmp/do_all.sh"
+    ]
+  }
 
   tags = [
     "control-instance"

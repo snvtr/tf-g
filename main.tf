@@ -4,6 +4,13 @@ provider "google" {
   zone    = "us-central1-c"
 }
 
+#terraform {
+#  backend "gcs" {
+#    bucket  = "bots-bucket-xxxxxxxxx"
+#    prefix  = "terraform/state"
+#  }
+#}
+
 module "apache" {
   source = "./modules/apache"
 }
@@ -17,3 +24,9 @@ module "control" {
   haproxy_ip = module.haproxy.haproxy_ip
   source     = "./modules/control"
 }
+
+/*
+module "bucket" {
+  source = "./modules/bucket"
+}
+*/

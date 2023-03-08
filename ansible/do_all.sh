@@ -9,7 +9,7 @@ sudo apt update && sudo apt install -y ansible
 HAPROXY=$(cat haproxy_out.txt)
 
 # build ansible hosts here:
-sed -r -i "s/HAPROXY_IP/${HAPROXY}/g" haproxy.cfg
+#sed -r -i "s/HAPROXY_IP/${HAPROXY}/g" haproxy.cfg
 sed -r -i "s/HAPROXY_IP/${HAPROXY}/g" hosts.yaml
 COUNTER=0
 for i in $(cat apache_out.txt)
@@ -19,13 +19,15 @@ do
   COUNTER=$(( COUNTER + 1 ))
 done
 
+cat hosts.yaml
+
 # reachability test
 ansible -m ping -i hosts.yaml apache_hosts
 ansible -m ping -i hosts.yaml haproxy_hosts
 
 # run ansible playbook for apache:
-#ansible-playbook -i hosts.yaml apache.yaml apache_hosts
+ansible-playbook -i hosts.yaml apache.yaml
 # run haproxy playbook for haproxy:
-#ansible-playbook -i hosts.yaml haproxy.yaml haproxy_hosts
+ansible-playbook -i hosts.yaml haproxy.yaml
 
 # done
